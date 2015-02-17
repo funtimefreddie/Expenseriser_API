@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :expenses
+
+  namespace :api do
+    namespace :v1 do
+      resources :expenses
+    end
+  end
+
+  
   devise_for :users
   root 'users#welcome'
   resources :users
