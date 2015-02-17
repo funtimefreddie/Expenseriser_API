@@ -9,6 +9,13 @@ class User < ActiveRecord::Base
 
   after_create :create_api_key
 
+
+  def expenses_between_dates start_date, end_date
+    self.expenses.where(:date => start_date..end_date)
+  end
+
+
+
   private
 
     def create_api_key
