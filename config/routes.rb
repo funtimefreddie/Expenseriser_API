@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :expenses
   devise_for :users
   root 'users#welcome'
   resources :users

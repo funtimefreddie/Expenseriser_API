@@ -1,0 +1,1 @@
+json.array! @expenses, :date, :amount

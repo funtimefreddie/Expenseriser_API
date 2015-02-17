@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+15.times do |index|
+Expense.create(user_id: 1, date: Date.today - index.days, amount: 1 + (index * 2))
+end
