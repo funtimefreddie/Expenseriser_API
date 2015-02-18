@@ -20,17 +20,13 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   end
 
   def create
-    #date = params[:date]
-    #amount = 
-    if params[:date] && params[:amount]
+    # makes sure both a date and amount parameters are supplied
+    if params[:date] && params[:amount] && params[:date].respond_to?(:to_date) && params[:amount].respond_to?(:to_f)
       Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
-      render json: { message: "Good going! You made an expense for #{params[:amount]}"}, status: 200
+      render json: { message: "Good going! You made an expense for $#{params[:amount]}"}, status: 200
     else
       whats_not_supplied(params)     
     end
-    #byebug
-
-    
   end
 
   private
@@ -38,8 +34,12 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   def whats_not_supplied(params)
     if !params[:date]
         render json: { message: "You didn't supply a date. Expense not created"}
-      else
+      elsif !params[:amount]
         render json: { message: "You didn't supply an amount. Expense not created"}
+      elsif !params[:date].respond_to?(:to_date)
+        render json: { message: "Date is not in the correct format"}
+      else
+        render json: { message: "Amount in incorrect format"}
       end
   end
   # def auth
