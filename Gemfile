@@ -10,7 +10,7 @@ gem 'awesome_print'
 gem 'json'
 # lets us retrieve http requests
 gem 'httparty'
-
+gem 'rails_12factor', group: :production
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
