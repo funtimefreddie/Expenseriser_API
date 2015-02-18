@@ -14,8 +14,6 @@ class User < ActiveRecord::Base
     self.expenses.where(:date => start_date..end_date)
   end
 
-
-
   private
 
     def create_api_key
