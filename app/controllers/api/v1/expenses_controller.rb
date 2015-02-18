@@ -22,8 +22,12 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   def create
     #date = params[:date]
     #amount = 
-    Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
-    render json: { message: "Good going! You made an expense for #{params[:amount]}"}, status: 200
+    if params[:date] && params[:amount]
+      Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
+      render json: { message: "Good going! You made an expense for #{params[:amount]}"}, status: 200
+    else
+      render json: { message: "You didn't supply a date and/or amount. Expense not created"}
+    end
     #byebug
 
     

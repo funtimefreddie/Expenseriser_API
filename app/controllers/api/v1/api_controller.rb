@@ -5,6 +5,8 @@ class Api::V1::ApiController < ActionController::Base
 
     token = request.headers["token"]
     name = request.headers["name"]
+    Rails.logger.info "Token : " + token
+    Rails.logger.info "Name : " + name
     @user = User.where(name: name).first
     return @user.api_key.token == token 
     
