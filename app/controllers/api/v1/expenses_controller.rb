@@ -23,7 +23,7 @@ class Api::V1::ExpensesController < Api::V1::ApiController
     #date = params[:date]
     #amount = 
     Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
-    render json: { message: "Good going!"}, status: 200
+    render json: { message: "Good going! You made an expense for #{params[:amount]}"}, status: 200
     #byebug
 
     
