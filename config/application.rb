@@ -8,6 +8,14 @@ Bundler.require(*Rails.groups)
 
 module Exp
   class Application < Rails::Application
+
+    STDOUT.sync = true
+
+    logger = Logger.new(STDOUT)
+    logger.level = 0 # Must be numeric here - 0 :debug, 1 :info, 2 :warn, 3 :error, and 4 :fatal
+    # NOTE:   with 0 you're going to get all DB calls, etc.
+
+    Rails.logger = Rails.application.config.logger = logger
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
