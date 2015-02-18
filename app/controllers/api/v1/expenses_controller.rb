@@ -26,7 +26,7 @@ class Api::V1::ExpensesController < Api::V1::ApiController
       Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
       render json: { message: "Good going! You made an expense for #{params[:amount]}"}, status: 200
     else
-      render json: { message: "You didn't supply a date and/or amount. Expense not created"}
+      whats_not_supplied(params)     
     end
     #byebug
 
@@ -34,6 +34,14 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   end
 
   private
+
+  def whats_not_supplied(params)
+    if !params[:date]
+        render json: { message: "You didn't supply a date. Expense not created"}
+      else
+        render json: { message: "You didn't supply an amount. Expense not created"}
+      end
+  end
   # def auth
   #   return authenticate
   # end
