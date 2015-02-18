@@ -20,8 +20,12 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   end
 
   def create
+    @valid_date = valid_date?
+    @valid_amount = valid_amount?
+    #byebug
     # makes sure both a date and amount parameters are supplied
-    if params[:date] && params[:amount] && params[:date].respond_to?(:to_date) && params[:amount].respond_to?(:to_f)
+    if params[:date] && params[:amount] && @valid_date && @valid_amount# && Date.parse(params[:date]) rescue ArgumentError != ArgumentError
+      
       Expense.create(date: params[:date], amount: params[:amount], user_id: @user.id)
       render json: { message: "Good going! You made an expense for $#{params[:amount]}"}, status: 200
     else
@@ -31,15 +35,23 @@ class Api::V1::ExpensesController < Api::V1::ApiController
 
   private
 
+  def valid_date?
+    Date.parse(params[:date]) rescue false
+  end
+
+  def valid_amount?
+    Float(params[:amount]) rescue false
+  end
+
   def whats_not_supplied(params)
     if !params[:date]
         render json: { message: "You didn't supply a date. Expense not created"}
       elsif !params[:amount]
         render json: { message: "You didn't supply an amount. Expense not created"}
-      elsif !params[:date].respond_to?(:to_date)
-        render json: { message: "Date is not in the correct format"}
+      elsif !@valid_date
+        render json: { message: "Incorrect form for Date. YYYY-MM-DD"}
       else
-        render json: { message: "Amount in incorrect format"}
+        render json: { message: "Incorrect format for Amount. Be sure to check that your Amount does not contain any letters."}
       end
   end
   # def auth
