@@ -8,7 +8,7 @@ class Api::V1::ApiController < ActionController::Base
     Rails.logger.info "Token : " + token
     Rails.logger.info "Name : " + name
     @user = User.where(name: name).first
-    return @user.api_key.token == token 
+    @user.api_key.token == token 
     
   end
 
