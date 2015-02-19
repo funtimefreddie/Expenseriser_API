@@ -3,7 +3,7 @@
 Expenseriser needs your name and token to access api, if you don't have it, sign up on <a href="https://guarded-caverns-1459.herokuapp.com" target="_blank">this link</a> 
 to register your company name and token
 
-===Create expense
+===Create expense http request
 To create expense you will need to add specific url we provide include headers of name,token and parameters of amount and date
   url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses
   method    : post 
@@ -12,13 +12,13 @@ To create expense you will need to add specific url we provide include headers o
   parameter : amount (decimal)
               date (yyyy-mm-dd)
 
-===Get expenses by date
+===Get expenses by date http request
 To get expenses you will need to add specific url we provide include headers of name,token and parameters of start date and/or end date.
 you can also add only start date or only end date or none of them. When you put all of parameters, you will get result all expense inside 
 date range given. If you only put start date parameter, you'll get result of expense from start date until present. If you only put 
 end date as parameter, you'll get expense from the oldest expense until given date
 
-  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses <br>
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses 
   method    : get 
   header    : name
               token             
