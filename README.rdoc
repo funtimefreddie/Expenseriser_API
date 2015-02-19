@@ -1,28 +1,26 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Expenseriser needs your name and token to access api, if you don't have it, sign up on <a href="https://guarded-caverns-1459.herokuapp.com" target="_blank">this link</a> 
+to register your company name and token
 
-Things you may want to cover:
+===Create expense
+To create expense you will need to add specific url we provide include headers of name,token and parameters of amount and date
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses
+  method    : post 
+  header    : name
+              token             
+  parameter : amount (decimal)
+              date (yyyy-mm-dd)
 
-* Ruby version
+===Get expenses by date
+To get expenses you will need to add specific url we provide include headers of name,token and parameters of start date and/or end date.
+you can also add only start date or only end date or none of them. When you put all of parameters, you will get result all expense inside 
+date range given. If you only put start date parameter, you'll get result of expense from start date until present. If you only put 
+end date as parameter, you'll get expense from the oldest expense until given date
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses <br>
+  method    : get 
+  header    : name
+              token             
+  parameter : start_date (yyyy-mm-dd) 
+              end_date (yyyy-mm-dd)
