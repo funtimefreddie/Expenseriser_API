@@ -1,54 +1,38 @@
 == README
 
-Expenserizer is a restful API that allows you to save and access expenses for your business.
 
-Visit
-https://guarded-caverns-1459.herokuapp.com/
+Expenseriser needs your name and token to access api, if you don't have it, sign up on <a href="https://guarded-caverns-1459.herokuapp.com" target="_blank">this link</a> 
+to register your company name and token
 
-Create an Account
+===Create expense http request
+To create expense you will need to add specific url we provide include headers of name,token and parameters of amount and date
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses
+  method    : post 
+  header    : name
+              token             
+  parameter : amount (decimal)
+              date (yyyy-mm-dd)
 
-Memorize your API key and Name...
+  example url : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100
 
+===Retrieve all expenses
+Use the following request to retrieve all expenses
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses 
+  method    : get 
+  header    : name <your_business_name>
+              token <your_API_key>
 
-Creating an Expense Entry with the API...
-Example Request URL
-https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100
+===Retrieve expenses by date http request
+To get expenses you will need to add specific url we provide include headers of name,token and parameters of start date and/or end date.
+you can also add only start date or only end date or none of them. When you put all of parameters, you will get result all expense inside 
+date range given. If you only put start date parameter, you'll get result of expense from start date until present. If you only put 
+end date as parameter, you'll get expense from the oldest expense until given date
 
-Type of Request
-POST
-
-URL Parameters
-key = value
-date = 2015-02-15
-amount = 100
-
-Headers
-Header Value
-token <your_API_key>
-name <your_business_name>
-
-By using this style of request, you'll be able to create an Expense Entry...
-
-
-Retrieving all Expense Entries...
-Request URL
-https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json
-
-Headers
-token <your_API_key>
-name <your_business_name>
-
-Retrieving Expense Entries for a Date Range Feb 1st 2015 to Feb 15th 2015...
-Request URL
-https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?start_date=2015-02-01&end_date=2015-02-15
-
-Headers
-token <your_API_key>
-name <your_business_name>
-
-Parameters
-start_date=2015-02-01
-end_date=2015-02-15
-
-
-
+===== Example request from Feb 01, 2015 to Feb 15, 2015
+  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses?start_date=2015-02-01&end_date=2015-02-15
+  method    : get 
+  header    : name
+              token             
+  parameter : start_date 2015-02-01
+              end_date 2015-02-15
+>>>>>>> 0be9b3ab057301d8805f0dee5b0edf655225783f
