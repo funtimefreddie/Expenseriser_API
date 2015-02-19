@@ -1,28 +1,54 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Expenserizer is a restful API that allows you to save and access expenses for your business.
 
-Things you may want to cover:
+Visit
+https://guarded-caverns-1459.herokuapp.com/
 
-* Ruby version
+Create an Account
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Memorize your API key and Name...
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Creating an Expense Entry with the API...
+Example Request URL
+https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100
+
+Type of Request
+POST
+
+URL Parameters
+key = value
+date = 2015-02-15
+amount = 100
+
+Headers
+Header Value
+token <your_API_key>
+name <your_business_name>
+
+By using this style of request, you'll be able to create an Expense Entry...
+
+
+Retrieving all Expense Entries...
+Request URL
+https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json
+
+Headers
+token <your_API_key>
+name <your_business_name>
+
+Retrieving Expense Entries for a Date Range Feb 1st 2015 to Feb 15th 2015...
+Request URL
+https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?start_date=2015-02-01&end_date=2015-02-15
+
+Headers
+token <your_API_key>
+name <your_business_name>
+
+Parameters
+start_date=2015-02-01
+end_date=2015-02-15
+
+
+
