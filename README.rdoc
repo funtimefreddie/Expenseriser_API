@@ -12,8 +12,9 @@ To create expense you will need to add specific url we provide include headers o
               token             
   parameter : amount (decimal)
               date (yyyy-mm-dd)
+  category  : category_name
 
-  example url : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100
+  example url : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100&category=my_category
 
 ===Retrieve all expenses
 Use the following request to retrieve all expenses
