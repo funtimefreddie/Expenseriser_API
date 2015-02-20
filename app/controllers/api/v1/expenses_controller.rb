@@ -2,10 +2,8 @@ class Api::V1::ExpensesController < Api::V1::ApiController
 
   # before_action :authenticate
 
-  def index  
-
-    if authenticate 
-
+  def index
+    if auth_user
       if Expense.user(@user).count ==0
         render json: { message: "You have no data - please submit date via a POST request" }, status: 401
       else
@@ -19,48 +17,60 @@ class Api::V1::ExpensesController < Api::V1::ApiController
         else
           @expenses = Expense.user(@user).after_date(start_date).before_date(end_date).category(category)
         end
-
       end
 
     else
+      return render json: { message: "Invalid Token", status: 400}, status: 400
+    end
+  end
 
-      render json: { message: "Invalid token"}, status: 401
-
-
-    end  
-
+  def auth_user
+    token = request.headers["token"]
+    @api_found = ApiKey.find_by_token(token)
+    if @api_found
+      @user = User.find(@api_found.user_id)
+    else
+      false
+    end
   end
 
   def create
 
-    
-    @valid_date = valid_date?
-    @valid_amount = valid_amount?
-
-    if authenticate
-  
-      
-      #makes sure both a date and amount parameters are supplied
-      if params[:date] && params[:amount] && @valid_date && @valid_amount# && Date.parse(params[:date]) rescue ArgumentError != ArgumentError
-        
-        Expense.create(category: params[:category], date: params[:date], amount: params[:amount], user_id: @user.id)
-        render json: { message: "Good going! You made an expense for $#{params[:amount]}"}, status: 200
-      else
-        whats_not_supplied(params)     
-      end
-
+    token = request.headers["token"]
+    # BROKEN IF API KEY IS NOT VALID.....
+    @api_found = ApiKey.find_by_token(token)
+    if @api_found
+      @user = User.find(@api_found.user_id)
     else
+      return render json: { message: "Invalid Token", status: 400}, status: 400
+    end
+    if !(token = request.headers["token"])
+      return render json: { message: "Missing Token", status: 400}
+    elsif !params[:amount]
+      return render json: { message: "No Amount Amount Supplied", status: 400}
+    elsif !params[:date]
+      return render json: { message: "No Date Supplied", status: 400} 
+    end
+    # always pass the token through as a header request...
+    
 
-      render json: { message: "Invalid token"}, status: 401
 
+    
+    #byebug
+    if params[:date] && params[:amount] && params[:category] && valid_date? && valid_amount?
+      @new_expense = Expense.create(category: params[:category], date: params[:date], amount: params[:amount], user_id: @user.id)
+      render json: { message: "Good going! You made an expense for $#{params[:amount]}", object: @new_expense }, status: 200
+    else
+      whats_not_supplied(params)     
     end
   end
-
+  # you know the hardest part about breaking up with a Japanese girl? You have to drop the bomb twice before she gets it
 
   private
 
   def valid_date?
-    Date.parse(params[:date]) rescue false
+    @result = !!(params[:date].match(/\d{4}-0[1-9]|1[0-2]-\d{2}/))
+    #Date.parse(params[:date]) rescue false
   end
 
   def valid_amount?
@@ -69,15 +79,15 @@ class Api::V1::ExpensesController < Api::V1::ApiController
 
   def whats_not_supplied(params)
     if !params[:date]
-        render json: { message: "You didn't supply a date. Expense not created"}
+      return render json: { message: "You didn't supply a date. Expense not created", status: 400}
       elsif !params[:amount]
-        render json: { message: "You didn't supply an amount. Expense not created"}
+        return render json: { message: "You didn't supply an amount. Expense not created", status: 400}
       elsif !params[:category]
-        render json: { message: "You didn't supply a category. Expense not created"}
+        return render json: { message: "You didn't supply a category. Expense not created", status: 400}
       elsif !@valid_date
-        render json: { message: "Incorrect form for Date. YYYY-MM-DD"}
+        return render json: { message: "Incorrect form for Date. YYYY-MM-DD", status: 400}
       else
-        render json: { message: "Incorrect format for Amount. Be sure to check that your Amount does not contain any letters."}
+        return render json: { message: "Incorrect format for Amount. Be sure to check that your Amount does not contain any letters.", status: 400}
       end
   end
   # def auth
