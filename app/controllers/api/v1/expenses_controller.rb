@@ -69,8 +69,7 @@ class Api::V1::ExpensesController < Api::V1::ApiController
   private
 
   def valid_date?
-    @result = !!(params[:date].match(/\d{4}-0[1-9]|1[0-2]-\d{2}/))
-    #Date.parse(params[:date]) rescue false
+    !!(params[:date].match(/\d{4}-(0[1-9]|1[0-2])-\d{2}/)) && Date.parse(params[:date]) rescue false 
   end
 
   def valid_amount?
