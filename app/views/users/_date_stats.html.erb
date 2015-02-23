@@ -1,0 +1,10 @@
+<%= form_tag({controller: "users", action: "expense_stats"}, method: "get") do %>
+  <div>
+    Start date : <%= select_date Date.today, prefix: :start_date %> <br>
+    End date   : <%= select_date Date.today, prefix: :end_date %><br>
+  </div>
+  <div>
+    <br>
+  <%= submit_tag("Search") %>
+</div>
+<% end %>
