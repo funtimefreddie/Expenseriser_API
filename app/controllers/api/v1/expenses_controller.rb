@@ -8,20 +8,25 @@ class Api::V1::ExpensesController < Api::V1::ApiController
         render json: { message: "You have no data - please submit date via a POST request" }, status: 401
       else
         
-        start_date = params[:start_date].respond_to?(:to_date) ? params[:start_date].to_date : Expense.user(@user).min_by(&:date).date
-        end_date = params[:end_date].respond_to?(:to_date) ? params[:end_date].to_date : Expense.user(@user).max_by(&:date).date
-        category = params[:category]
+        start_date = valid_date(params[:start_date]) ? params[:start_date].to_date : Expense.user(@user).min_by(&:date).date
+        end_date = valid_date(params[:end_date]) ? params[:end_date].to_date : Expense.user(@user).max_by(&:date).date
+        # category = params[:category]
 
-        if category == nil
-          @expenses = Expense.user(@user).after_date(start_date).before_date(end_date)
-        else
-          @expenses = Expense.user(@user).after_date(start_date).before_date(end_date).category(category)
-        end
+        @expenses = get_expenses_by_date start_date,end_date,params[:category]
+       
       end
 
     else
       return render json: { message: "Invalid Token", status: 400}, status: 400
     end
+  end
+
+  def get_expenses_by_date start_date,end_date,category=nil 
+     if category == nil
+          expenses = Expense.user(@user).after_date(start_date).before_date(end_date)
+        else
+          expenses = Expense.user(@user).after_date(start_date).before_date(end_date).category(category)
+        end
   end
 
   def auth_user
@@ -57,7 +62,7 @@ class Api::V1::ExpensesController < Api::V1::ApiController
 
     
     #byebug
-    if params[:date] && params[:amount] && params[:category] && valid_date? && valid_amount?
+    if params[:date] && params[:amount] && params[:category] && valid_date(params[:date]) && valid_amount?
       @new_expense = Expense.create(category: params[:category], date: params[:date], amount: params[:amount], user_id: @user.id)
       render json: { message: "Good going! You made an expense for $#{params[:amount]}", object: @new_expense }, status: 200
     else
@@ -68,8 +73,8 @@ class Api::V1::ExpensesController < Api::V1::ApiController
 
   private
 
-  def valid_date?
-    !!(params[:date].match(/\d{4}-(0[1-9]|1[0-2])-\d{2}/)) && Date.parse(params[:date]) rescue false 
+  def valid_date date_params
+    !!(date_params.match(/\d{4}-(0[1-9]|1[0-2])-\d{2}/)) && Date.parse(date_params) rescue false 
   end
 
   def valid_amount?
