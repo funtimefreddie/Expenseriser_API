@@ -1,29 +1,29 @@
-class UsersController < ApplicationController
-
-  
+class UsersController < ApplicationController 
 
 
   def welcome
-
   end
 
   def expense_stats
+
+    #check logged in with devise
     if current_user
       @start_date = Date.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
       @end_date = Date.civil(params[:end_date][:year].to_i, params[:end_date][:month].to_i, params[:end_date][:day].to_i)
      
       @expenses  = Expense.where("date between '#{@start_date}' and '#{@end_date}'").group("category").count
-       @total = 0
-       @expenses.each_value do |count|
-          @total += count
+      @total = 0
+      @expenses.each_value do |exp|
+          @total += exp
+      end
 
-       end
-       @stats = Hash.new
-       @expenses.each do |key,value|
+      @stats = Hash.new
+      @expenses.each do |key,value|
+          # show % of total expenses
           @stats[key] = (value.to_f/@total.to_f).to_f * 100
-       end
-       render  :action => "welcome"
-      # @test = Expense.find_by_sql("select category,COUNT(*) as count from expenses where date between '#{start_date}' and '#{end_date}' group by category order by category asc")
+      end
+      render  :action => "welcome"
+      
     else
       return render json: { message: "Invalid Token", status: 400}, status: 400
     end

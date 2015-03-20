@@ -2,11 +2,12 @@
 <% if user_signed_in? %>
   <%= "Your API key is " + current_user.api_key.token %><br>
    <%= render 'date_stats' %><br>
-<% if @stats.nil? == false %>
-      <h4>Expenses Stats between <%= @start_date.to_s %> and <%= @end_date.to_s%> </h4> <br>
-      <% @stats.each do |key,value|%>
-          <%= key.to_s %>:&nbsp <%= sprintf("%0.02f ",value)%> %  <br>
-      <% end %>
+
+  <% if @stats.nil? == false %>
+        <h4>Expenses Stats between <%= @start_date.to_s %> and <%= @end_date.to_s%> </h4> <br>
+        <% @stats.each do |key,value|%>
+            <%= key.to_s %>:&nbsp <%= sprintf("%0.02f ",value)%> %  <br>
+        <% end %>
   <% end %>
   
 <% else %>

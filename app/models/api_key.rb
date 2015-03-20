@@ -4,6 +4,7 @@ class ApiKey < ActiveRecord::Base
 
   private
 
+  #generates random 30 digit token
   def generate_token
     begin
       self.token = SecureRandom.hex.to_s

@@ -1,16 +1,18 @@
 source 'https://rubygems.org'
 
-# authenitication
+# authentication
 gem 'devise'
-# API gem
-# gem 'rails-api'
+
 # nicer display in rails c
 gem 'awesome_print'
+
 # helps us parse json
 gem 'json'
+
 # lets us retrieve http requests
 gem 'httparty'
 gem 'rails_12factor', group: :production
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

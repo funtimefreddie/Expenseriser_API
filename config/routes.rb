@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   namespace :api do
     namespace :v1 do
       resources :expenses
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
   resources :users
   get '/welcome' => 'users#welcome'
   get '/expense_stats' => 'users#expense_stats'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

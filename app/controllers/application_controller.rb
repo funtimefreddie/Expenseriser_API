@@ -6,8 +6,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
-  protected  
+  protected 
 
+  # enables passing of name variable with the devise 'User' model
   def configure_devise_permitted_parameters
     registration_params = [:name, :email, :password, :password_confirmation]
 
