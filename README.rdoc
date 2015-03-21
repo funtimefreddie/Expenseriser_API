@@ -1,38 +1,40 @@
 == INTRO
 
 Expenseriser is an API that allows you to submit and recall details of expenses, costs, revenues, and other financial metrics.  
-Though really, it's a simple app built to demonstrate the ability to create APIs, access tokens, and getting two apps to communicate with each other
+Though really, it's a simple app built to demonstrate the ability to create APIs, access tokens, and getting two apps to communicate with each other!
 
+This is the expenseriser app itself - this manages requests from other apps and provides users with an API token which they need to connect to the API
 
 == SIGN UP
 
 To use expenseriser, you need an API token.  This is a 30 digit code or password, obtained by registering with us at
 https://guarded-caverns-1459.herokuapp.com/users/sign_in
 
+== HOW TO USE EXPENSERISER FROM YOUR APP
 
-===SUBMIT EXPENSES via http request
-To create expense you will need to submit a request to the url listed below, along with headers for name, token (as per expenseriser login details), expense amount and date
-  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses
-  method    : post 
-  header    : name
-              token             
-  parameter : amount (decimal)
-              date (yyyy-mm-dd)
-  category  : category_name
+  ===SUBMIT EXPENSES via http request
+  To create expense you will need to submit a request to the url listed below, along with headers for name, token (as per expenseriser login details), expense amount and date
+    url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses
+    method    : post 
+    header    : name
+                token             
+    parameter : amount (decimal)
+                date (yyyy-mm-dd)
+    category  : category_name
 
-  example url : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100&category=my_category
-
-
-===RETRIEVE expenses
-Use the following request to retrieve all expenses
-  url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses 
-  method    : get 
-  header    : name <your_business_name>
-              token <your_API_key>
-  parameters: start_date, end_date (both optional)
-
-  example url: https://guarded-caverns-1459.herokuapp.com/api/v1/expenses?start_date=2015-02-01&end_date=2015-02-15
+    example url : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses.json?date=2015-02-15&amount=100&category=my_category
 
 
-== DEMO APP
-We have kindly built a demo app - available at https://github.com/funtimefreddie/expenseriser_demo.  This demonstrates the basic functionality described above, and should serve as a template for you to build in to your own app!
+  ===RETRIEVE expenses
+  Use the following request to retrieve all expenses
+    url       : https://guarded-caverns-1459.herokuapp.com/api/v1/expenses 
+    method    : get 
+    header    : name <your_business_name>
+                token <your_API_key>
+    parameters: start_date, end_date (both optional)
+
+    example url: https://guarded-caverns-1459.herokuapp.com/api/v1/expenses?start_date=2015-02-01&end_date=2015-02-15
+
+
+  == DEMO APP
+  We have kindly built a demo app - available at https://github.com/funtimefreddie/expenseriser_demo.  This demonstrates the basic functionality described above, and should serve as a template for you to build in to your own app!

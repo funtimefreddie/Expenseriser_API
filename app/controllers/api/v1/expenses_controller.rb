@@ -1,7 +1,5 @@
 class Api::V1::ExpensesController < Api::V1::ApiController
 
-  # before_action :authenticate
-
   # authenticate user - check if we can find their token
   def auth_user
     token = request.headers["token"]
@@ -71,14 +69,17 @@ class Api::V1::ExpensesController < Api::V1::ApiController
  
   private
 
+  # check if date in the right format.  Note - dates stored as strings as testing using postman!
   def valid_date?
     !!(params[:date].match(/\d{4}-(0[1-9]|1[0-2])-\d{2}/)) && Date.parse(params[:date]) rescue false 
   end
 
+  # check if amount is a valid number
   def valid_amount?
     Float(params[:amount]) rescue false
   end
 
+  # give user message to inform them what data is missing from the request
   def whats_not_supplied(params)
     if !params[:date]
       return render json: { message: "You didn't supply a date. Expense not created", status: 400}
